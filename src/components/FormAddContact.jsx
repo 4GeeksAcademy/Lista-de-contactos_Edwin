@@ -44,7 +44,7 @@ export const FormAddContact = () => (
       </input>
     </div>
     <div className="mb-3">
-      <button type="button" class="btn btn-primary w-100">Save</button>
+      <button type="button" class="btn btn-success w-100">Save</button>
     </div>
   </div>
 );

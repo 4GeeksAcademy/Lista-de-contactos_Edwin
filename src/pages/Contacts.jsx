@@ -9,7 +9,7 @@ export const Contacts = () => {
 
   return (
     <div className="container">
-      <h1>LISTADO DE CONTACTOS</h1>
+      <h1 className ="text-center">Contact List</h1>
       <ContactCard/>
       <br />
 
