@@ -10,9 +10,12 @@ export const Contacts = () => {
   return (
     <div className="container">
       <h1 className ="text-center">Contact List</h1>
-      <ContactCard/>
-      <br />
 
+      {store.contacts.map(contact => (
+        <ContactCard key={contact.id} contact={contact} />
+      ))}
+      
+      <br />
       <Link to="/">
         <button className="btn btn-primary">Back home</button>
       </Link>
