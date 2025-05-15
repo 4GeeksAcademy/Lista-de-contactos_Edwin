@@ -5,9 +5,18 @@ import { MdEmail, MdModeEdit, MdDelete } from "react-icons/md";
 import { useState } from "react";
 import "../styles/card.css";
 import { EditContactModal } from "./EditContactModal";
+import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const ContactCard = ({ contact }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { dispatch } = useGlobalReducer();
+
+  const handleDelete = () => {
+    dispatch({ type: "delete_contact", payload: contact.id });
+    setShowDeleteModal(false);
+  };
 
   return (
     <>
@@ -38,21 +47,30 @@ export const ContactCard = ({ contact }) => {
             <button
               type="button"
               className="btn"
-              onClick={() => setShowModal(true)}
+              onClick={() => setShowEditModal(true)}
             >
               <MdModeEdit className="icon" />
             </button>
 
-            <button type="button" className="btn">
+            <button type="button" className="btn" 
+              onClick={() => setShowDeleteModal(true)}>
               <MdDelete className="delete-icon icon " />
             </button>
           </div>
         </div>
       </div>
-      {showModal && (
+
+      {showEditModal && (
         <EditContactModal
           contact={contact}
-          onClose={() => setShowModal(false)}
+          onClose={() => setShowEditModal(false)}
+        />
+      )}
+      {showDeleteModal && (
+        <ConfirmDeleteModal
+          contactName={contact.fullName}
+          onConfirm={handleDelete}
+          onCancel={() => setShowDeleteModal(false)}
         />
       )}
     </>

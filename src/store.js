@@ -22,7 +22,6 @@ export const initialStore = () => {
 
 export default function storeReducer(store, action = {}) {
   switch (action.type) {
-
     case "add_contact":
       return {
         ...store,
@@ -36,6 +35,13 @@ export default function storeReducer(store, action = {}) {
           contact.id === action.payload.id
             ? { ...contact, ...action.payload }
             : contact
+        ),
+      };
+    case "delete_contact":
+      return {
+        ...store,
+        contacts: store.contacts.filter(
+          (contact) => contact.id !== action.payload
         ),
       };
     default:
