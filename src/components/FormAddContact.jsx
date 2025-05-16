@@ -3,7 +3,6 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import { addContact } from "../services/APIFetch";
 
 export const FormAddContact = () => {
-  const { dispatch } = useGlobalReducer();
   const agenda = "agenda2";
   const [message, setMessage] = useState("");
 

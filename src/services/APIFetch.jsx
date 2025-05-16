@@ -53,7 +53,6 @@ export async function updateContact(agenda, contact) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          accept: "application/json",
         },
         body: JSON.stringify({
           name: contact.name,
