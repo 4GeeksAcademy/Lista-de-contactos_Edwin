@@ -5,6 +5,7 @@ export const FormAddContact = () => {
   const { dispatch } = useGlobalReducer();
   const [newContact, setNewContact] = useState("");
   const agenda = "agenda2";
+  const [message, setMessage] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -15,7 +16,8 @@ export const FormAddContact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    setForm({ ...form, [name]: value });    
+    setMessage("");
   };
 
   const handleSubmit = async () => {
@@ -37,12 +39,14 @@ export const FormAddContact = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Contacto agregado:", data);
+        setMessage("Contact added.");
       } else {
         console.error("Error al agregar el contacto:", response.statusText);
+        setMessage("Error adding contact.");
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
+      setMessage("Error adding contact.");
     }
 
     setForm({
@@ -55,6 +59,7 @@ export const FormAddContact = () => {
 
   return (
     <div>
+      {message && <div className="alert alert-info">{message}</div>}
       <div className="mb-3">
         <label for="formGroupExampleInput" className="form-label">
           Full Name
