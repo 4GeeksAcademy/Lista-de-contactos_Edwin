@@ -3,12 +3,14 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const FormAddContact = () => {
   const { dispatch } = useGlobalReducer();
+  const [newContact, setNewContact] = useState("");
+  const agenda = "agenda2";
 
   const [form, setForm] = useState({
-    fullName: "",
+    name: "",
     email: "",
     phone: "",
-    location: "",
+    address: "",
   });
 
   const handleChange = (e) => {
@@ -16,22 +18,39 @@ export const FormAddContact = () => {
     setForm({ ...form, [name]: value });
   };
 
-
-  const handleSubmit = () => {
-    const newContact = {
+  const handleSubmit = async () => {
+    const newInput = {
       ...form,
-      id: Date.now(), 
-      phone: Number(form.phone)
     };
 
-    dispatch({ type: "add_contact", payload: newContact });
+    try {
+      const response = await fetch(
+        `https://playground.4geeks.com/contact/agendas/${agenda}/contacts`,
+        {
+          method: "POST",
+          body: JSON.stringify(newInput),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-     setForm({
-      fullName: "",
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Contacto agregado:", data);
+      } else {
+        console.error("Error al agregar el contacto:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+
+/*     setForm({
+      name: "",
       email: "",
       phone: "",
-      location: ""
-    });
+      address: "",
+    }); */
   };
 
   return (
@@ -42,10 +61,10 @@ export const FormAddContact = () => {
         </label>
         <input
           type="text"
-          name="fullName"
+          name="name"
           className="form-control"
           placeholder="Enter full name"
-          value={form.fullName}
+          value={form.name}
           onChange={handleChange}
         ></input>
       </div>
@@ -67,7 +86,7 @@ export const FormAddContact = () => {
           Phone
         </label>
         <input
-          type="number"
+          type="text"
           name="phone"
           className="form-control"
           placeholder="Enter phone number"
@@ -81,15 +100,19 @@ export const FormAddContact = () => {
         </label>
         <input
           type="text"
-          name="location"
+          name="address"
           className="form-control"
           placeholder="Enter address"
-          value={form.location}
+          value={form.address}
           onChange={handleChange}
         ></input>
       </div>
       <div className="mb-3">
-        <button type="button" class="btn btn-success w-100" onClick={handleSubmit}>
+        <button
+          type="button"
+          className="btn btn-success w-100"
+          onClick={handleSubmit}
+        >
           Save
         </button>
       </div>

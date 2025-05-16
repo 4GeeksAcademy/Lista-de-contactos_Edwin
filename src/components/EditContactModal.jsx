@@ -10,7 +10,8 @@ export const EditContactModal = ({ contact, onClose }) => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = () => { // volver asincrono
+    // logica de edicion en el servidor
     dispatch({ type: "update_contact", payload: form });
     onClose();
   };

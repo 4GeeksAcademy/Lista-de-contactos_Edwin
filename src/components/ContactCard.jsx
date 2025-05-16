@@ -13,7 +13,8 @@ export const ContactCard = ({ contact }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { dispatch } = useGlobalReducer();
 
-  const handleDelete = () => {
+  const handleDelete = () => { //volverlo asincrono
+    //logica del servidor para el delete
     dispatch({ type: "delete_contact", payload: contact.id });
     setShowDeleteModal(false);
   };
@@ -27,10 +28,10 @@ export const ContactCard = ({ contact }) => {
           </div>
           <div className="col-md-7">
             <div className="card-body">
-              <h5 className="card-title mb-4">{contact.fullName}</h5>
+              <h5 className="card-title mb-4">{contact.name}</h5>
               <p className="card-text">
                 <FaLocationDot className="me-2" />
-                {contact.location}
+                {contact.address}
               </p>
               <p className="card-text">
                 <FaPhone className="me-2" />

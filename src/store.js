@@ -1,23 +1,7 @@
+
+
 export const initialStore = () => {
-  return {
-    message: null,
-    contacts: [
-      {
-        id: 1,
-        fullName: "Edwin Gonzalez",
-        location: "Suba",
-        phone: 3012305761,
-        email: "esgo.edwin@gmail.com",
-      },
-      {
-        id: 2,
-        fullName: "Blanca Contreras",
-        location: "Bosa",
-        phone: 3212162556,
-        email: "blcm1968@gmail.com",
-      },
-    ],
-  };
+  return contacts = [];
 };
 
 export default function storeReducer(store, action = {}) {
@@ -44,6 +28,10 @@ export default function storeReducer(store, action = {}) {
           (contact) => contact.id !== action.payload
         ),
       };
+
+    case  'set_store':
+      return  action.payload;
+      
     default:
       throw Error("Unknown action.");
   }
