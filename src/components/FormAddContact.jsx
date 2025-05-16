@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { addContact } from "../services/APIFetch";
 
 export const FormAddContact = () => {
   const { dispatch } = useGlobalReducer();
@@ -25,16 +26,7 @@ export const FormAddContact = () => {
     };
 
     try {
-      const response = await fetch(
-        `https://playground.4geeks.com/contact/agendas/${agenda}/contacts`,
-        {
-          method: "POST",
-          body: JSON.stringify(newInput),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await addContact(agenda, newInput);
 
       if (response.ok) {
         setMessage("Contact added.");

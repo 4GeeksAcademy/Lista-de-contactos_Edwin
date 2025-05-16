@@ -69,7 +69,7 @@ export const ContactCard = ({ contact }) => {
       )}
       {showDeleteModal && (
         <ConfirmDeleteModal
-          contactName={contact.fullName}
+          contactName={contact.name}
           onConfirm={handleDelete}
           onCancel={() => setShowDeleteModal(false)}
         />

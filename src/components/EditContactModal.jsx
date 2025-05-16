@@ -26,7 +26,7 @@ export const EditContactModal = ({ contact, onClose }) => {
             type="text"
             className="form-control mb-2"
             name="fullName"
-            value={form.fullName}
+            value={form.name}
             onChange={handleChange}
             placeholder="Full Name"
           />
@@ -50,7 +50,7 @@ export const EditContactModal = ({ contact, onClose }) => {
             type="text"
             className="form-control mb-3"
             name="location"
-            value={form.location}
+            value={form.address}
             onChange={handleChange}
             placeholder="Location"
           />
