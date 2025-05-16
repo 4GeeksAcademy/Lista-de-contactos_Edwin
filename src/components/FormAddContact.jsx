@@ -3,7 +3,6 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const FormAddContact = () => {
   const { dispatch } = useGlobalReducer();
-  const [newContact, setNewContact] = useState("");
   const agenda = "agenda2";
   const [message, setMessage] = useState("");
 
@@ -38,7 +37,6 @@ export const FormAddContact = () => {
       );
 
       if (response.ok) {
-        const data = await response.json();
         setMessage("Contact added.");
       } else {
         console.error("Error al agregar el contacto:", response.statusText);
