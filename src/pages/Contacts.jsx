@@ -2,39 +2,19 @@ import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer"; // Custom hook for accessing the global state.
 import { ContactCard } from "../components/ContactCard";
 import { useEffect, useState } from "react";
-import { downloadContact } from "../services/APIFetch";
+import { downloadContact, createContactList } from "../services/APIFetch";
 
 export const Contacts = () => {
   const agenda = "agenda2";
   const { store, dispatch } = useGlobalReducer();
   const [loading, setLoading] = useState(true);
 
-  async function crearAgenda(agenda) {
-    try {
-      const response = await fetch(
-        `https://playground.4geeks.com/contact/agendas/${agenda}`,
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Agenda creada:", data);
-      } else {
-        const errorData = await response.json();
-        console.log("Ya existe la agenda:", errorData);
-        downloadContact(agenda);
-      }
-    } catch (error) {
-      console.log("Error en la solicitud:", error);
-    }
-  }
-
   useEffect(() => {
-    crearAgenda(agenda);
+    try {
+      createContactList(agenda);
+    } catch (error) {
+      console.error("Error creando agenda: ", error);
+    }
     if (loading) {
       const fetchContacts = async () => {
         const contacts = await downloadContact(agenda);
