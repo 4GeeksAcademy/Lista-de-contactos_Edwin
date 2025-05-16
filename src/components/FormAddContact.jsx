@@ -45,12 +45,12 @@ export const FormAddContact = () => {
       console.error("Error en la solicitud:", error);
     }
 
-/*     setForm({
+    setForm({
       name: "",
       email: "",
       phone: "",
       address: "",
-    }); */
+    });
   };
 
   return (

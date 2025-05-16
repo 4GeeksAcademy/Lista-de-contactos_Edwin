@@ -50,7 +50,7 @@ export const Contacts = () => {
   }
 
   useEffect(() => {
-    //crearAgenda(agenda);
+    crearAgenda(agenda);
     if (loading) {
       const fetchContacts = async () => {
         const contacts = await descargarContactos(agenda);
