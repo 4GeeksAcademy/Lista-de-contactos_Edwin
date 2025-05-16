@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer"; // Custom hook for accessing the global state.
 import { ContactCard } from "../components/ContactCard";
 import { useEffect, useState } from "react";
+import { downloadContact } from "../services/APIFetch";
 
 export const Contacts = () => {
   const agenda = "agenda2";
@@ -25,27 +26,10 @@ export const Contacts = () => {
       } else {
         const errorData = await response.json();
         console.log("Ya existe la agenda:", errorData);
-        descargarContactos(agenda);
+        downloadContact(agenda);
       }
     } catch (error) {
       console.log("Error en la solicitud:", error);
-    }
-  }
-
-  async function descargarContactos(agenda) {
-    try {
-      const response = await fetch(
-        `https://playground.4geeks.com/contact/agendas/${agenda}/contacts`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        return data;
-      } else {
-        const errorData = await response.json();
-        console.log("Error en contactos:", errorData);
-      }
-    } catch (error) {
-      console.error("Error en la solicitud: ", error);
     }
   }
 
@@ -53,10 +37,9 @@ export const Contacts = () => {
     crearAgenda(agenda);
     if (loading) {
       const fetchContacts = async () => {
-        const contacts = await descargarContactos(agenda);
+        const contacts = await downloadContact(agenda);
         if (contacts) {
           dispatch({ type: "set_store", payload: contacts });
-          console.log("Contactos desde useEffect:", contacts);
         }
         setLoading(false);
       };

@@ -32,3 +32,17 @@ export async function deleteContact(agenda, contactID) {
     throw error;
   }
 }
+
+export async function downloadContact(agenda) {
+  try {
+    const response = await fetch(
+      `https://playground.4geeks.com/contact/agendas/${agenda}/contacts`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    throw error;
+  }
+}
