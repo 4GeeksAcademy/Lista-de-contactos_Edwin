@@ -7,16 +7,28 @@ import "../styles/card.css";
 import { EditContactModal } from "./EditContactModal";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { deleteContact } from "../services/APIFetch";
 
 export const ContactCard = ({ contact }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { dispatch } = useGlobalReducer();
+  const agenda = "agenda2";
 
-  const handleDelete = () => { //volverlo asincrono
-    //logica del servidor para el delete
-    dispatch({ type: "delete_contact", payload: contact.id });
-    setShowDeleteModal(false);
+  const handleDelete = async () => {
+    try {
+      const response = await deleteContact(agenda, contact.id);
+      if (response.ok) {
+        console.log("Contact deleted");
+      }else{        
+        const errorData = await response.json();
+        console.log("Error:", errorData);
+      }
+      dispatch({ type: "delete_contact", payload: contact.id });
+      setShowDeleteModal(false);
+    } catch (error) {
+      console.log("Fallo al eliminar: ", error);
+    }
   };
 
   return (
@@ -53,8 +65,11 @@ export const ContactCard = ({ contact }) => {
               <MdModeEdit className="icon" />
             </button>
 
-            <button type="button" className="btn" 
-              onClick={() => setShowDeleteModal(true)}>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => setShowDeleteModal(true)}
+            >
               <MdDelete className="delete-icon icon " />
             </button>
           </div>
